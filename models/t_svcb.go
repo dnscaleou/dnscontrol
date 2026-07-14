@@ -31,6 +31,12 @@ func (rc *RecordConfig) SetTargetSVCBString(origin, contents string) error {
 	return legacySetTargetParse(rc, dnsv2.TypeSVCB, contents)
 }
 
+// SetTargetHTTPSString is like SetTargetSVCBString, but parses the record as HTTPS.
+// Deprecated. Use models.NewRecordConfigParse() instead.
+func (rc *RecordConfig) SetTargetHTTPSString(origin, contents string) error {
+	return legacySetTargetParse(rc, dnsv2.TypeHTTPS, contents)
+}
+
 // GetSVCBValue returns the SVCB Key/Values as a list of Key/Values.
 // Used to construct dnsv.RR of type SVCB or HTTPS. (This is legacy code that should go away eventualy).
 func (rc *RecordConfig) GetSVCBValue() []dnsv1.SVCBKeyValue {
