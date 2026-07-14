@@ -505,9 +505,8 @@ func toRecordConfig(domain string, r Record) (*models.RecordConfig, error) {
 		return rc, rc.SetTargetSSHFPString(content)
 	case "HTTPS":
 		// DNScale returns HTTPS as "priority target params"
-		// Must set Type before calling SetTargetSVCBString (it defaults to SVCB if empty)
 		rc.Type = "HTTPS"
-		return rc, rc.SetTargetSVCBString(domain, content)
+		return rc, rc.SetTargetHTTPSString(domain, content)
 	case "SVCB":
 		// DNScale returns SVCB as "priority target params"
 		rc.Type = "SVCB"

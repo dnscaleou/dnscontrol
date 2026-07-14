@@ -124,7 +124,9 @@ func (rc *RecordConfig) PopulateFromStringFunc(rtype, contents, origin string, t
 		return rc.SetTargetSRVString(contents)
 	case "SSHFP":
 		return rc.SetTargetSSHFPString(contents)
-	case "SVCB", "HTTPS":
+	case "HTTPS":
+		return rc.SetTargetHTTPSString(origin, contents)
+	case "SVCB":
 		return rc.SetTargetSVCBString(origin, contents)
 	case "TLSA":
 		return rc.SetTargetTLSAString(contents)
@@ -219,7 +221,9 @@ func (rc *RecordConfig) PopulateFromString(rtype, contents, origin string) error
 		return rc.SetTargetSRVString(contents)
 	case "SSHFP":
 		return rc.SetTargetSSHFPString(contents)
-	case "SVCB", "HTTPS":
+	case "HTTPS":
+		return rc.SetTargetHTTPSString(origin, contents)
+	case "SVCB":
 		return rc.SetTargetSVCBString(origin, contents)
 	case "TLSA":
 		return rc.SetTargetTLSAString(contents)

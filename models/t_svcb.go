@@ -34,10 +34,9 @@ func (rc *RecordConfig) SetTargetSVCB(priority uint16, target string, params []d
 	return nil
 }
 
-// SetTargetSVCBString is like SetTargetSVCB but accepts one big string and the origin so parsing can be done using miekg/dns.
-func (rc *RecordConfig) SetTargetSVCBString(origin, contents string) error {
+func (rc *RecordConfig) setTargetSVCBString(origin, contents, defaultType string) error {
 	if rc.Type == "" {
-		rc.Type = "SVCB"
+		rc.Type = defaultType
 	}
 	record, err := dnsv1.NewRR(fmt.Sprintf("%s. %s %s", origin, rc.Type, contents))
 	if err != nil {
@@ -50,4 +49,14 @@ func (rc *RecordConfig) SetTargetSVCBString(origin, contents string) error {
 		return rc.SetTargetSVCB(r.Priority, r.Target, r.Value)
 	}
 	return nil
+}
+
+// SetTargetSVCBString is like SetTargetSVCB but accepts one big string and the origin so parsing can be done using miekg/dns.
+func (rc *RecordConfig) SetTargetSVCBString(origin, contents string) error {
+	return rc.setTargetSVCBString(origin, contents, "SVCB")
+}
+
+// SetTargetHTTPSString is like SetTargetSVCBString, but parses the record as HTTPS.
+func (rc *RecordConfig) SetTargetHTTPSString(origin, contents string) error {
+	return rc.setTargetSVCBString(origin, contents, "HTTPS")
 }
